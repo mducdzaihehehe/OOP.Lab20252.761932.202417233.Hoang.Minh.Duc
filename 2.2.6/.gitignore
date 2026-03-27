@@ -1,0 +1,38 @@
+import javax.swing.JOptionPane;
+
+public class Duc {
+
+    public static void main(String[] args) {
+
+
+        String inputGiap = JOptionPane.showInputDialog("Nhập độ dài cạnh thứ nhất (Giáp):");
+        double giap = Double.parseDouble(inputGiap);
+
+        String inputLy = JOptionPane.showInputDialog("Nhập độ dài cạnh thứ hai (Ly):");
+        double ly = Double.parseDouble(inputLy);
+
+        String inputNham = JOptionPane.showInputDialog("Nhập độ dài cạnh thứ ba (Nhâm):");
+        double nham = Double.parseDouble(inputNham);
+
+
+        if (giap + ly > nham && giap + nham > ly && ly + nham > giap) {
+
+            // Tính nửa chu vi
+            double p = (giap + ly + nham) / 2;
+
+            // 3. Tính diện tích S, gán cho biến mang tên bạn cuối cùng (Quang)
+            double quang = Math.sqrt(p * (p - giap) * (p - ly) * (p - nham));
+
+            // Hiển thị kết quả
+            JOptionPane.showMessageDialog(null, "Diện tích tam giác (Quang) là: " + quang);
+
+        } else {
+            // Thông báo lỗi nếu 3 cạnh không tạo thành tam giác
+            JOptionPane.showMessageDialog(null,
+                    "Ba số " + giap + ", " + ly + ", " + nham + " không tạo thành một tam giác hợp lệ!",
+                    "Lỗi nhập liệu",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
