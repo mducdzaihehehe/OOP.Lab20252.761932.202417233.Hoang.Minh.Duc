@@ -1,0 +1,56 @@
+TRẢ LỜI LAB03
+
+1. Nạp chồng phương thức: tham số mảng và varargs
+
+Phương thức addDigitalVideoDisc(DigitalVideoDisc[] dvdList) hữu ích khi các DVD đã được lưu sẵn trong một mảng.
+
+Phiên bản varargs addDigitalVideoDisc(DigitalVideoDisc... dvdList) tiện hơn khi người gọi muốn truyền trực tiếp nhiều DVD, ví dụ:
+addDigitalVideoDisc(dvd1, dvd2, dvd3).
+
+Trong trường hợp này, em thích dùng varargs hơn vì cú pháp ngắn hơn và dễ gọi hơn. Tuy nhiên, trong Java, DigitalVideoDisc[] và DigitalVideoDisc... có cùng method signature sau khi biên dịch, nên không thể khai báo cả hai phiên bản trong cùng một class. Vì vậy, code nộp giữ lại phiên bản overload dùng mảng và giải thích phiên bản varargs trong comment.
+
+2. Java là truyền tham trị hay truyền tham chiếu?
+
+Java luôn là truyền tham trị.
+
+Với kiểu dữ liệu nguyên thủy, Java truyền một bản sao của giá trị nguyên thủy. Với object, Java truyền một bản sao của giá trị tham chiếu.
+
+Vì vậy, swap(o1, o2) chỉ hoán đổi các bản sao cục bộ của tham chiếu bên trong phương thức. Nó không làm thay đổi hai biến gốc jungleDVD và cinderellaDVD trong main.
+
+3. Sau khi gọi swap(jungleDVD, cinderellaDVD), vì sao title của hai object vẫn giữ nguyên?
+
+Vì o1 và o2 là các biến cục bộ bên trong phương thức swap. Việc gán o1 = o2 và o2 = tmp chỉ thay đổi các bản sao cục bộ này. Hai biến jungleDVD và cinderellaDVD trong main vẫn trỏ tới các object ban đầu.
+
+4. Sau khi gọi changeTitle(jungleDVD, cinderellaDVD.getTitle()), vì sao title của jungleDVD bị thay đổi?
+
+Vì phương thức nhận một bản sao của tham chiếu tới object Jungle DVD. Mặc dù tham chiếu được sao chép, nó vẫn trỏ tới cùng một object trong bộ nhớ. Vì vậy, dvd.setTitle(title) sẽ sửa trực tiếp object đó.
+
+5. Viết một phương thức swap có thể hoán đổi đúng hai object.
+
+Một cách đúng là bọc hai object vào trong một mảng và hoán đổi các phần tử của mảng:
+
+public static void swapCorrectly(DigitalVideoDisc[] dvds) {
+    DigitalVideoDisc tmp = dvds[0];
+    dvds[0] = dvds[1];
+    dvds[1] = tmp;
+}
+
+Sau đó, gán lại các phần tử trong mảng về các biến ban đầu sau khi gọi phương thức.
+
+6. Kiểu trả về của toString() nên là gì?
+
+Kiểu trả về của toString() nên là String.
+
+7. Classifier member và instance member
+
+Classifier/class member là thành viên được dùng chung bởi tất cả object của một class. Trong Java, nó thường được khai báo bằng từ khóa static. Ví dụ, nbDigitalVideoDiscs được dùng chung bởi tất cả object DigitalVideoDisc.
+
+Instance/object member là thành viên thuộc về từng object cụ thể. Mỗi object có bản sao riêng của nó. Ví dụ, id, title, category, director, length và cost là các instance member của DigitalVideoDisc.
+
+8. String, StringBuilder và StringBuffer
+
+String là immutable, nghĩa là không thể thay đổi nội dung sau khi được tạo. Khi dùng toán tử + trong vòng lặp, Java tạo ra nhiều object String trung gian, gây tốn bộ nhớ và thời gian xử lý.
+
+StringBuilder và StringBuffer sử dụng buffer có thể thay đổi nội dung, nên hiệu quả hơn khi nối chuỗi nhiều lần.
+
+StringBuffer được đồng bộ hóa và an toàn trong môi trường đa luồng. StringBuilder không được đồng bộ hóa, nên thường nhanh hơn trong chương trình đơn luồng.

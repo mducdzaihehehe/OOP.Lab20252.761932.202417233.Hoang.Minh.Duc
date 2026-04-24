@@ -1,0 +1,56 @@
+LAB03 ANSWERS
+
+1. Method overloading: array parameter vs varargs
+
+The method addDigitalVideoDisc(DigitalVideoDisc[] dvdList) is useful when the DVDs are already stored in an array.
+
+A varargs version addDigitalVideoDisc(DigitalVideoDisc... dvdList) is more convenient when the caller wants to pass several DVDs directly, for example:
+addDigitalVideoDisc(dvd1, dvd2, dvd3).
+
+In this case, I prefer varargs because it is shorter and easier to call. However, in Java, DigitalVideoDisc[] and DigitalVideoDisc... have the same method signature after compilation, so both versions cannot be declared together in the same class. Therefore, the submitted code keeps the array overload and explains the varargs version in comments.
+
+2. Is Java pass by value or pass by reference?
+
+Java is always pass by value.
+
+For primitive types, Java passes a copy of the primitive value. For objects, Java passes a copy of the reference value.
+
+Therefore, swap(o1, o2) only swaps the local copies of the references inside the method. It does not change the original variables jungleDVD and cinderellaDVD in main.
+
+3. After calling swap(jungleDVD, cinderellaDVD), why do the titles still remain?
+
+Because o1 and o2 are local variables inside the swap method. Assigning o1 = o2 and o2 = tmp only changes these local copies. The variables jungleDVD and cinderellaDVD in main still point to the original objects.
+
+4. After calling changeTitle(jungleDVD, cinderellaDVD.getTitle()), why is the title of jungleDVD changed?
+
+Because the method receives a copy of the reference to the Jungle DVD object. Although the reference is copied, it still points to the same object in memory. Therefore, dvd.setTitle(title) modifies the object itself.
+
+5. Write a swap method that can correctly swap two objects.
+
+A correct way is to wrap the two objects inside an array and swap the array elements:
+
+public static void swapCorrectly(DigitalVideoDisc[] dvds) {
+    DigitalVideoDisc tmp = dvds[0];
+    dvds[0] = dvds[1];
+    dvds[1] = tmp;
+}
+
+Then assign the array elements back to the original variables after calling the method.
+
+6. What should be the return type of toString()?
+
+The return type of toString() should be String.
+
+7. Classifier member vs instance member
+
+A classifier/class member is shared by all objects of a class. In Java, it is usually declared with the static keyword. For example, nbDigitalVideoDiscs is shared by all DigitalVideoDisc objects.
+
+An instance/object member belongs to each object. Each object has its own copy. For example, id, title, category, director, length, and cost are instance members of DigitalVideoDisc.
+
+8. String, StringBuilder and StringBuffer
+
+String is immutable. When using the + operator in a loop, Java creates many intermediate String objects, which wastes memory and time.
+
+StringBuilder and StringBuffer use mutable buffers, so they are more efficient for repeated string concatenation.
+
+StringBuffer is synchronized and thread-safe. StringBuilder is not synchronized, so it is usually faster in single-thread programs.
